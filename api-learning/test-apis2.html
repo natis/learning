@@ -6,17 +6,20 @@
 	<link rel="stylesheet" href="style2.css">
 </head>
 <body>
-	<button class="loader">Load Data</button>
+	<!-- button class="loader">Load Data</! -->
+	<div class="filters">
+		<button class="toggle-geo"><span>Hide</span> Coordinates</button>
+	</div><!-- /filters-->
 	<table class="city-list">
 		<thead>
 			<tr>
-				<th>City</th>
-				<th>State</th>
-				<th>Population</th>
-				<th>Growth</th>
-				<th>Latitude</th>
-				<th>Longitude</th>
-				<th>Rank</th>
+				<th data-label="city">City</th>
+				<th data-label="state">State</th>
+				<th data-label="population">Population</th>
+				<th data-label="growth">Growth</th>
+				<th data-label="latitude">Latitude</th>
+				<th data-label="longitude">Longitude</th>
+				<th data-label="rank data-label=""">Rank</th>
 			</tr>
 		</thead>
 		<tbody>			
@@ -34,14 +37,14 @@
 		(latitude)
 		(longitude)
 		City's rank in regards to population (rank)
-		*/	
-		/*
+
 		What to do with the data:
-		1) Get the data to display in a table
+		1) Get the data to display in a table ✔️ lines 52 to 95
+			1a) Get data to display on page load. ✔️
 		2) Let user hide lat and long columns
 		3) Filter the data based on criteria
-		3a) Filter by State
-		3b) Filter by Growth
+			3a) Filter by State - generate dropdown based on available states
+			3b) Filter by Growth - dropdown with ranges
 		4) Let user sort columns by City Name, State, Rank, and growth
 		*/
 		
@@ -49,16 +52,16 @@
 		const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
 		const cities = [];
 		const theList = document.querySelector('tbody');
-		const loader = document.querySelector('.loader'); // Because I don't know how the fuck to get the page to load with the data displayed
 		
 		// Fetch all the data from the endpoint
-		fetch(endpoint)
-		.then(blob => blob.json())
-		.then(data => cities.push(...data));
-		
-		//Let's put a comma in the population count got this from a previous tutorial. dude said to just bookmark this regex snippet
-		function numberWithCommas(x) {
-			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		function repo() {
+			return fetch(endpoint)
+			.then(blob => blob.json())
+			.then(data => cities.push(...data));
+		}
+		const getRepo = async() => {
+			const ret = await repo();
+			return ret;
 		}
 		
 		//Actually build the table with the data from the json file
@@ -66,20 +69,45 @@
 			const html = cities.map(place => {
 				return `
 				<tr>
-					<td>${place.city}</td>
-					<td>${place.state}</td>
-					<td>${numberWithCommas(place.population)}</td>
-					<td>${place.growth_from_2000_to_2013}</td>
-					<td>${place.latitude}</td>
-					<td>${place.longitude}</td>
-					<td>${place.rank}</td>
+					<td data-label="city">${place.city}</td>
+					<td data-label="state">${place.state}</td>
+					<td data-label="population">${numberWithCommas(place.population)}</td>
+					<td data-label="growth">${place.growth_from_2000_to_2013}</td>
+					<td data-label="latitude">${place.latitude}</td>
+					<td data-label="longitude">${place.longitude}</td>
+					<td data-label="rank">${place.rank}</td>
 				</tr>
 				`;
 			}).join('');
 			theList.innerHTML = html;
 		}
+		
+		async function buildPage() {
+			const repos = await getRepo();
+			buildTable();
+		}
+		
+		//Let's put a comma in the population count got this from a previous tutorial. dude said to just bookmark this regex snippet
+		function numberWithCommas(x) {
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+		
+		buildPage();
 
-		loader.addEventListener('click', buildTable);
+		// Hide/show long/lat columns
+		const hideGeoloc = document.querySelector('.toggle-geo');
+		function toggleLongLat() {
+			const cells = tr.cells;
+			cells.classList.toggle('hide');
+
+		}
+		hideGeoloc.addEventListener('click', toggleLongLat);
+
+
+
+		// This is for when I couldn't get the data to show on page load and needed a button event listener
+		//const loader = document.querySelector('.loader'); // Because I don't know how the fuck to get the page to load with the data displayed
+		//loader.addEventListener('click', buildTable);
 		
 	</script>
 </body>

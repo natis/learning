@@ -24,3 +24,9 @@ th, td {
 tr:nth-child(even) td {
     background-color: #eee;
 }
+.filters {
+	padding: 1.5rem;
+}
+.hide {
+	display: none;
+}
