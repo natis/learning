@@ -1,0 +1,21 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Architects+Daughter&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+:root {
+	--color-p: 204, 42%;
+	--color-p-l: 27%;
+	--f-primary: 'PT Sans', sans-serif;
+	--f-secondary: 'Architects Daughter', sans-serif;
+	--c-primary: hsl(var(--color-p),var(--color-p-l));
+	--c-secondary: hsl(40, 90%, 51%);
+	--c-primary-dark: hsl(var(--color-p),calc(var(--color-p-l) - 5%));
+}
+html {
+	font-size: 62.5%;
+	overscroll-behavior: none;
+}
+body {
+	font-family: var(--f-primary);
+	font-size: 1.6rem;
+	overscroll-behavior: none;
+	padding: 2.0rem;
+}

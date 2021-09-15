@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>API Learning</title>
+	<link rel="stylesheet" href="style2.css">
+</head>
+<body>
+	<button class="loader">Load Data</button>
+	<table class="city-list">
+		<thead>
+			<tr>
+				<th>City</th>
+				<th>State</th>
+				<th>Population</th>
+				<th>Growth</th>
+				<th>Latitude</th>
+				<th>Longitude</th>
+				<th>Rank</th>
+			</tr>
+		</thead>
+		<tbody>			
+			
+		</tbody>
+	</table>
+	<script>
+		
+		/* 
+		Here's what data is in the API:
+		City Name (city)
+		State (state)
+		Population (population)
+		Growth from 2000 to 2013 in % (growth_from_2000_to_2013)
+		(latitude)
+		(longitude)
+		City's rank in regards to population (rank)
+		*/	
+		/*
+		What to do with the data:
+		1) Get the data to display in a table
+		2) Let user hide lat and long columns
+		3) Filter the data based on criteria
+		3a) Filter by State
+		3b) Filter by Growth
+		4) Let user sort columns by City Name, State, Rank, and growth
+		*/
+		
+		// Variables
+		const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+		const cities = [];
+		const theList = document.querySelector('tbody');
+		const loader = document.querySelector('.loader'); // Because I don't know how the fuck to get the page to load with the data displayed
+		
+		// Fetch all the data from the endpoint
+		fetch(endpoint)
+		.then(blob => blob.json())
+		.then(data => cities.push(...data));
+		
+		//Let's put a comma in the population count got this from a previous tutorial. dude said to just bookmark this regex snippet
+		function numberWithCommas(x) {
+			return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		}
+		
+		//Actually build the table with the data from the json file
+		function buildTable() {
+			const html = cities.map(place => {
+				return `
+				<tr>
+					<td>${place.city}</td>
+					<td>${place.state}</td>
+					<td>${numberWithCommas(place.population)}</td>
+					<td>${place.growth_from_2000_to_2013}</td>
+					<td>${place.latitude}</td>
+					<td>${place.longitude}</td>
+					<td>${place.rank}</td>
+				</tr>
+				`;
+			}).join('');
+			theList.innerHTML = html;
+		}
+
+		loader.addEventListener('click', buildTable);
+		
+	</script>
+</body>
+</html>

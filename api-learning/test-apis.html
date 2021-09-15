@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>API Learning</title>
+	<link rel="stylesheet" href="style2.css">
+</head>
+<body>
+	
+	<table class="city-list">
+		<thead>
+			
+		</thead>
+		<tbody>			
+
+			
+		</tbody>
+	</table>
+	<script>
+
+		// Variables
+		const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+		const tableCells = document.querySelector('.the-list');
+		const all = [];
+		const cities = [];
+		// Fetch all the data from the endpoint
+		
+		fetch(endpoint)
+		.then(blob => blob.json())
+		.then(data => cities.push(...data));
+		
+		function buildTable(data){
+			const table = tableCells;
+			for (var i = 0; i < data.length; i++){
+				var row = `<tr>
+					<td>${city}</td>
+					<td>${data[i].age}</td>
+					<td>${data[i].birthdate}</td>
+				</tr>`
+				table.innerHTML += row
+			}
+		}
+		
+		/* 
+		Here's what data is in the API:
+		City Name (city)
+		State (state)
+		Population (population)
+		Growth from 2000 to 2013 in % (growth_from_2000_to_2013)
+		(latitude)
+		(longitude)
+		City's rank in regards to population (rank)
+		*/	
+		/*
+		What to do with the data:
+		1) Get the data to display in a table
+		2) Let user hide lat and long columns
+		3) Filter the data based on criteria
+		3a) Filter by State
+		3b) Filter by Growth
+		4) Let user sort columns by City Name, State, Rank, and growth
+		*/
+		
+		// The event listeners
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<script>
+	import Navbar from './navbar.svelte';
+	import Player from './player.svelte';
+	import AddPlayer from './addPlayer.svelte';
+
+	let players = [
+		{
+			name: 'John Doe',
+			points: 53
+		},
+		{
+			name: 'Sam Smith',
+			points: 46
+		},
+		{
+			name: 'Peter Parker',
+			points: 66
+		}
+	];
+	const addPlayer = (e) => {
+		const newPlayer = e.detail;
+		players = [...players, newPlayer];
+	};
+
+	const removePlayer = e => {
+		players = players.filter(player => player.name !== e.detail);
+	}
+
+</script>
+
+<main>
+	<Navbar />
+	<AddPlayer on:addplayer={addPlayer} />
+	<div class="container">
+		{#if players.length === 0 }
+			<p>No Players</p>
+		{:else}
+			{#each players as player}
+				<Player name={player.name} points={player.points} on:removeplayer={removePlayer} />
+			{/each}
+		{/if}
+	</div>
+</main>

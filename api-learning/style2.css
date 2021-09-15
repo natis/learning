@@ -1,0 +1,26 @@
+html {
+  box-sizing: border-box;
+  background: #ffc600;
+  font-family: 'helvetica neue';
+  font-size: 15px;
+  font-weight: 200;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+table {
+    background-color: white;
+    border-collapse: collapse;
+    width: 100%;
+}
+th {
+    border-bottom: 0.2rem solid black;
+}
+th, td {
+    padding: 1.0rem;
+    text-align: left;
+}
+tr:nth-child(even) td {
+    background-color: #eee;
+}
