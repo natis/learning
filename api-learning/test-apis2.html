@@ -10,16 +10,16 @@
 	<div class="filters">
 		<button class="toggle-geo"><span>Hide</span> Coordinates</button>
 	</div><!-- /filters-->
-	<table class="city-list">
+	<table class="city-list sortable">
 		<thead>
 			<tr>
-				<th data-label="city">City</th>
-				<th data-label="state">State</th>
-				<th data-label="population">Population</th>
-				<th data-label="growth">Growth</th>
-				<th data-label="latitude">Latitude</th>
-				<th data-label="longitude">Longitude</th>
-				<th data-label="rank data-label=""">Rank</th>
+				<th class="city sortOpt">City</th>
+				<th class="state sortOpt">State</th>
+				<th class="population sortOpt">Population</th>
+				<th class="growth sortOpt">Growth</th>
+				<th class="geo">Latitude</th>
+				<th class="geo">Longitude</th>
+				<th class="rank sortOpt">Rank</th>
 			</tr>
 		</thead>
 		<tbody>			
@@ -37,15 +37,16 @@
 		(latitude)
 		(longitude)
 		City's rank in regards to population (rank)
-
+		
 		What to do with the data:
 		1) Get the data to display in a table ✔️ lines 52 to 95
-			1a) Get data to display on page load. ✔️
-		2) Let user hide lat and long columns
-		3) Filter the data based on criteria
-			3a) Filter by State - generate dropdown based on available states
-			3b) Filter by Growth - dropdown with ranges
-		4) Let user sort columns by City Name, State, Rank, and growth
+		1a) Get data to display on page load. ✔️
+		2) Let user hide lat and long columns ✔️
+		3) Let user sort columns by City Name, State, Rank, and growth
+		4) Filter the data based on criteria
+		4a) Filter by State - generate dropdown based on available states
+		4b) Filter by Growth - dropdown with ranges
+		5) Pagination at 50 records a page
 		*/
 		
 		// Variables
@@ -54,14 +55,11 @@
 		const theList = document.querySelector('tbody');
 		
 		// Fetch all the data from the endpoint
-		function repo() {
+		
+		const getRepo = async() => {
 			return fetch(endpoint)
 			.then(blob => blob.json())
 			.then(data => cities.push(...data));
-		}
-		const getRepo = async() => {
-			const ret = await repo();
-			return ret;
 		}
 		
 		//Actually build the table with the data from the json file
@@ -69,13 +67,13 @@
 			const html = cities.map(place => {
 				return `
 				<tr>
-					<td data-label="city">${place.city}</td>
-					<td data-label="state">${place.state}</td>
-					<td data-label="population">${numberWithCommas(place.population)}</td>
-					<td data-label="growth">${place.growth_from_2000_to_2013}</td>
-					<td data-label="latitude">${place.latitude}</td>
-					<td data-label="longitude">${place.longitude}</td>
-					<td data-label="rank">${place.rank}</td>
+					<td class="city">${place.city}</td>
+					<td class="state">${place.state}</td>
+					<td class="population">${numberWithCommas(place.population)}</td>
+					<td class="growth">${place.growth_from_2000_to_2013}</td>
+					<td class="geo">${place.latitude}</td>
+					<td class="geo">${place.longitude}</td>
+					<td class="rank">${place.rank}</td>
 				</tr>
 				`;
 			}).join('');
@@ -83,7 +81,7 @@
 		}
 		
 		async function buildPage() {
-			const repos = await getRepo();
+			await getRepo();
 			buildTable();
 		}
 		
@@ -93,18 +91,151 @@
 		}
 		
 		buildPage();
-
+		
 		// Hide/show long/lat columns
+		/* 	Lesson here is that if you're getting a bunch of elements that all share a class/data-* or whatever, you can't use
+		classList as that targets an individual item, you need a forEach with an arrow function.
+		Honestly, this shit is easier in Jquery.
+		*/
 		const hideGeoloc = document.querySelector('.toggle-geo');
 		function toggleLongLat() {
-			const cells = tr.cells;
-			cells.classList.toggle('hide');
-
+			const geoLoc = document.querySelectorAll('.geo');
+			geoLoc.forEach(geoInfo => {
+				geoInfo.classList.toggle('hide')
+			});
 		}
 		hideGeoloc.addEventListener('click', toggleLongLat);
-
-
-
+		
+		// Sortable table
+		/* 	Doing it this way to make the function more generalized and re-usable for future projects
+		or if there are multiple tables on a page, but let's be honest, that's seldom the case
+		*/
+		// Find tables that are sortable
+		const sortTable = document.querySelectorAll('table.sortable');
+		
+		
+		// Then let's iterate through the tables and make sure they have a thead as the th will be the sortable data and action
+		for (i = 0; i < sortTable.length; i++) {
+			table = sortTable[i];
+			if (thead = table.querySelector('thead')) {
+				headers = thead.querySelectorAll('th.sortOpt');
+				for (j = 0; j < headers.length; j++) {
+					headers[j].innerHTML = `<button>` + headers[j].innerText + `</button>`;
+				}
+				thead.addEventListener('click', sortTableFunction(table));
+			}
+		}
+		function sortTableFunction(table) {
+			return function(e) {
+				if (e.target.tagName.toLowerCase() == 'button') {
+					sortRows(table, siblingIndex(e.target.parentNode));
+					e.preventDefault();
+				}
+			};
+		}
+		function siblingIndex(node) {
+			let count = 0;
+			while (node = node.previousElementSibling) {
+				count++;
+			}
+			return count;
+		}
+		
+		function sortRows(table, columnIndex) {
+			var rows = table.querySelectorAll('tbody tr'),
+			sel = 'thead th:nth-child(' + (columnIndex + 1) + ')',
+			sel2 = 'td:nth-child(' + (columnIndex + 1) + ')',
+			classList = table.querySelector(sel).classList,
+			values = [],
+			cls = '',
+			allNum = true,
+			val,
+			index,
+			node;
+			
+			if (classList) {
+				if (classList.contains('date')) {
+					cls = "date";
+				} else if (classList.contains('number')) {
+					cls = "number";
+				}
+			}
+			
+			for (index = 0; index < rows.length; index++) {
+				node = rows[index].querySelector(sel2);
+				val = node.innerText;
+				
+				if (isNaN(val)) {
+					allNum = false;
+				} else {
+					val = parseFloat(val);
+				}
+				
+				values.push({ value: val, row: rows[index] });
+			}
+			
+			if (cls == "" && allNum) {
+				cls = "number";
+			}
+			
+			if (cls == "number") {
+				values.sort(sortNumberVal);
+				values = values.reverse();
+			} else if (cls == "date") {
+				values.sort(sortDateVal);
+			} else {
+				values.sort(sortTextVal);
+			}
+			
+			for (var idx = 0; idx < values.length; idx++) {
+				table.querySelector("tbody").appendChild(values[idx].row);
+			}
+		}
+		
+		/**
+		* Compare two 'value objects' numerically
+		*/
+		function sortNumberVal(a, b) {
+			return sortNumber(a.value, b.value);
+		}
+		
+		/**
+		* Numeric sort comparison
+		*/
+		function sortNumber(a, b) {
+			return a - b;
+		}
+		
+		/**
+		* Compare two 'value objects' as dates
+		*/
+		function sortDateVal(a, b) {
+			var dateA = Date.parse(a.value),
+			dateB = Date.parse(b.value);
+			
+			return sortNumber(dateA, dateB);
+		}
+		
+		/**
+		* Compare two 'value objects' as simple text; case-insensitive
+		*/
+		function sortTextVal(a, b) {
+			var textA = (a.value + "").toUpperCase();
+			var textB = (b.value + "").toUpperCase();
+			
+			if (textA < textB) {
+				return -1;
+			}
+			
+			if (textA > textB) {
+				return 1;
+			}
+			
+			return 0;
+		}
+		
+		
+		
 		// This is for when I couldn't get the data to show on page load and needed a button event listener
 		//const loader = document.querySelector('.loader'); // Because I don't know how the fuck to get the page to load with the data displayed
 		//loader.addEventListener('click', buildTable);
