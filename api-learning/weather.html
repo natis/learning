@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>API Learning</title>
+</head>
+<body>
+	<!-- button class="loader">Load Data</! -->
+
+	<input type="text" name="city" id="city" value="">
+	<button type="submit" class="submit">Submit</button>
+
+	<div class="weather-info">
+		<h1 class="city-name"></h1>
+		<p class="temperature"></p>
+		<p class="description"></p>
+	</div>
+	<script>
+		// Variables
+		const endpoint = 'https://api.openweathermap.org/data/2.5/weather'
+		const key = "791f23f2895c4397a268dc0d1eb4c68f";
+		
+		const submit = document.querySelector('.submit');
+		const cityName = document.querySelector('.city-name');
+		const temp = document.querySelector('.temperature');
+		const desc = document.querySelector('.description');
+
+		const getWeather = async() => {
+			return fetch(endpoint)
+			.then(blob => blob.json())
+			.then(data => weatherDetails.push(...data));
+		}
+		
+
+		submit.addEventListener('click', (e) => {
+			const city = document.getElementById('city').value;
+			console.log(endpoint);
+		});
+		// Fetch all the data from the endpoint
+		
+
+		
+		//Actually build the table with the data from the json file
+
+		
+		// async function buildPage() {
+		// 	await getRepo();
+		// 	buildTable();
+		// 	getRows();
+		// }
+		
+
+		
+	</script>
+</body>
+</html>
