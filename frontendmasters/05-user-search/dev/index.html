@@ -13,42 +13,51 @@
 	<div class="frame">
 		<header>
 			<h1>Devfinder</h1>
-			<button class="toggle light">Light <span class="icon" aria-hidden="true"></span></button>
+			<button class="toggle light">Dark <span class="icon" aria-hidden="true"></span></button>
 		</header>
 		<form class="search-form">
-			<input type="text">
+			<input type="text" placeholder="Search GitHub username ...">
+			<span class="error none" aria-hidden="true">No results</span>
 			<input type="button" value="Search">
 		</form>
 		<main>
+			<div class="avatar">
+				<img src="images/avatar-fpo.png" alt="User avatar" aria-hidden="true">
+			</div><!-- /avatar -->
 			<div class="user-details">
-				<h2 class="username">Username</h2>
-				<p class="joined">Joined <span class="join-date">25 Jan 2011</span></p>
-				<p class="github-account"><a href="#">@username</a></p>
-			</div><!-- /user-details-->
-			<table>
-				<thead>
-					<tr>
-						<th>Repos</th>
-						<th>Followers</th>
-						<th>Following</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
+				<div class="details">
+					<h2 class="username">The Octocat</h2>
+					<p class="joined">Joined <span class="join-date">25 Jan 2011</span></p>
+					<p class="github-account"><a href="#">@octocat</a></p>
+					<div class="bio">
+						<p>This profile has no bio and it's getting longer.</p>
+					</div><!-- /bio -->
+				</div><!-- /details -->
+				<table>
+					<thead>
 						<tr>
-							<td>8</td>
-							<td>3938</td>
-							<td>9</td>
+							<th>Repos</th>
+							<th>Followers</th>
+							<th>Following</th>
 						</tr>
-					</tr>
-				</tbody>
-			</table>
-			<ul class="links">
-				<li class="location"><a href="#">San Francisco</a></li>
-				<li class="twitter"><a href="#">Twitter</a></li>
-				<li class="github-link"><a href="#">https://github.blog/</a></li>
-				<li class="employer"><a href="#">@github</a></li>
-			</ul>
+					</thead>
+					<tbody>
+						<tr>
+							<tr>
+								<td>8</td>
+								<td>3938</td>
+								<td>9</td>
+							</tr>
+						</tr>
+					</tbody>
+				</table>
+				<ul class="links">
+					<li class="location"><a href="#">San Francisco</a></li>
+					<li class="twitter"><a href="#">Twitter</a></li>
+					<li class="github-link"><a href="#">https://github.blog/</a></li>
+					<li class="employer"><a href="#">@github</a></li>
+				</ul>
+			</div><!-- /user-details-->
 		</main>
 	</div><!-- /frame -->
 </body>
