@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Github User Search; Frontend Mentor challenge.">
+	<link href="styles/main.css" rel="stylesheet">
+	<link rel="icon" type="image/png" href="favicon-32x32.png">
+	<title>Github User Search</title>
+</head>
+<body>
+	<div class="frame">
+		<header>
+			<h1>Devfinder</h1>
+			<button class="toggle light">Light <span class="icon" aria-hidden="true"></span></button>
+		</header>
+		<form class="search-form">
+			<input type="text">
+			<input type="button" value="Search">
+		</form>
+		<main>
+			<div class="user-details">
+				<h2 class="username">Username</h2>
+				<p class="joined">Joined <span class="join-date">25 Jan 2011</span></p>
+				<p class="github-account"><a href="#">@username</a></p>
+			</div><!-- /user-details-->
+			<table>
+				<thead>
+					<tr>
+						<th>Repos</th>
+						<th>Followers</th>
+						<th>Following</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<tr>
+							<td>8</td>
+							<td>3938</td>
+							<td>9</td>
+						</tr>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="links">
+				<li class="location"><a href="#">San Francisco</a></li>
+				<li class="twitter"><a href="#">Twitter</a></li>
+				<li class="github-link"><a href="#">https://github.blog/</a></li>
+				<li class="employer"><a href="#">@github</a></li>
+			</ul>
+		</main>
+	</div><!-- /frame -->
+</body>
+</html>
