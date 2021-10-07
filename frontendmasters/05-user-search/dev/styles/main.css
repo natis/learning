@@ -105,7 +105,7 @@ header h1 {
 .search-form input[type='text'] {
   border: 0;
   font-size: 1.8rem;
-  max-width: 25.5rem;
+  max-width: 35.5rem;
   width: 100%;
 }
 
@@ -151,7 +151,7 @@ main {
   -ms-grid-columns: min-content auto;
       grid-template-columns: -webkit-min-content auto;
       grid-template-columns: min-content auto;
-  padding: 4.8rem;
+  padding: 4.8rem 4.8rem 3.5rem;
 }
 
 .avatar {
@@ -175,6 +175,7 @@ main {
   -ms-grid-rows: (auto)[3];
       grid-template-rows: repeat(3, auto);
       grid-template-areas: 'username join-date' 'user-handle user-handle' 'bio bio';
+  margin-bottom: 1.0rem;
 }
 
 .details p {
@@ -207,8 +208,13 @@ main {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: user-handle;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.08rem;
   line-height: .5;
+}
+
+.github-account a {
+  color: var(--btn-primary);
+  text-decoration: none;
 }
 
 .bio {
@@ -217,5 +223,75 @@ main {
   -ms-grid-column-span: 2;
   grid-area: bio;
   padding: 1.0rem 0;
+}
+
+.repo-info {
+  background: var(--light-body);
+  border-radius: 1.5rem;
+  line-height: 1.23;
+  margin-bottom: 4.2rem;
+  padding: 1.4rem 3rem;
+  width: 100%;
+}
+
+.repo-info th {
+  font-size: 1.3rem;
+  font-weight: 400;
+  text-align: left;
+  width: 32%;
+}
+
+.repo-info th:nth-child(2) {
+  width: 36%;
+}
+
+.repo-info th:nth-child(3) {
+  width: 29%;
+}
+
+.repo-info td {
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.links {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto;
+      grid-template-columns: auto auto;
+  line-height: 1.3;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.links li {
+  margin-bottom: 1.7rem;
+}
+
+.links li path {
+  fill: var(--light-up);
+  -webkit-transition: fill .5s ease-in-out;
+  transition: fill .5s ease-in-out;
+}
+
+.links a {
+  color: var(--light-up);
+  text-decoration: none;
+  -webkit-transition: color .5s ease-in-out;
+  transition: color .5s ease-in-out;
+}
+
+.links a:hover {
+  color: var(--light-over);
+}
+
+.links a:hover path {
+  fill: var(--light-over);
+}
+
+.links .icon {
+  margin-right: 0.4rem;
+  vertical-align: middle;
 }
 /*# sourceMappingURL=main.css.map */
