@@ -1,20 +1,35 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css");
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap");
-:root {
+:root, :root .light {
   --btn-primary: #0079ff;
   --btn-primary-hover: #60abff;
   --error-color: #f74646;
-  --light-body: #f6f8ff;
-  --light-font-color: #2b3442;
-  --light-main: #fefefe;
-  --light-up: #4b6a9b;
-  --light-over: #222731;
-  --dark-body: #141d2f;
-  --dark-main: #1e2a47;
-  --dark-font-color: #fff;
-  --dark-up: #fff;
-  --dark-over: #90a4d4;
-  --light-boxshadow: 0 1.6rem 3.0rem -1.0rem rgba(70, 96, 187, 0.198567);
+  --body: #f6f8ff;
+  --font-color: #2b3442;
+  --main: #fefefe;
+  --link-up: #4b6a9b;
+  --link-over: #222731;
+  --boxshadow: 0 1.6rem 3.0rem -1.0rem rgba(70, 96, 187, 0.198567);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body: #141d2f;
+    --main: #1e2a47;
+    --font-color: #fff;
+    --link-up: #fff;
+    --link-over: #90a4d4;
+    --boxshadow: none;
+  }
+}
+
+:root .dark {
+  --body: #141d2f;
+  --main: #1e2a47;
+  --font-color: #fff;
+  --link-up: #fff;
+  --link-over: #90a4d4;
+  --boxshadow: none;
 }
 
 html, body {
@@ -22,17 +37,12 @@ html, body {
 }
 
 body {
-  background-color: var(--light-body);
-  color: var(--light-font-color);
+  background-color: var(--body);
+  color: var(--font-color);
   font-family: 'Space Mono', monospace;
   font-size: 1.5rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--dark-body);
-    color: var(--dark-font-color);
-  }
+  -webkit-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
 }
 
 .frame {
@@ -62,7 +72,7 @@ header h1 {
 .toggle {
   background: none;
   border: 0;
-  color: #697c9a;
+  color: var(--link-up);
   font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.4rem;
@@ -75,7 +85,8 @@ header h1 {
   cursor: pointer;
 }
 
-.icon {
+.toggle .icon {
+  background: url("img/icon-moon.svg") top left no-repeat;
   content: '';
   display: inline-block;
   height: 2.0rem;
@@ -83,15 +94,15 @@ header h1 {
   width: 2.0rem;
 }
 
-.light .icon {
-  background: url("img/icon-moon.svg") top left no-repeat;
+.dark .toggle .icon {
+  background: url("img/icon-sun.svg") top left no-repeat;
 }
 
 .search-form {
-  background: url("img/icon-search.svg") var(--light-main) 3.2rem center no-repeat;
+  background: url("img/icon-search.svg") var(--main) 3.2rem center no-repeat;
   border-radius: 1.5rem;
-  -webkit-box-shadow: var(--light-boxshadow);
-          box-shadow: var(--light-boxshadow);
+  -webkit-box-shadow: var(--boxshadow);
+          box-shadow: var(--boxshadow);
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: 1fr auto auto;
@@ -103,10 +114,28 @@ header h1 {
 }
 
 .search-form input[type='text'] {
+  background: transparent;
   border: 0;
+  color: var(--font-color);
   font-size: 1.8rem;
   max-width: 35.5rem;
   width: 100%;
+}
+
+.search-form input[type='text']::-webkit-input-placeholder {
+  color: var(--font-color);
+}
+
+.search-form input[type='text']:-ms-input-placeholder {
+  color: var(--font-color);
+}
+
+.search-form input[type='text']::-ms-input-placeholder {
+  color: var(--font-color);
+}
+
+.search-form input[type='text']::placeholder {
+  color: var(--font-color);
 }
 
 .search-form input[type='button'] {
@@ -141,10 +170,10 @@ header h1 {
 }
 
 main {
-  background-color: var(--light-main);
+  background-color: var(--main);
   border-radius: 1.5rem;
-  -webkit-box-shadow: var(--light-boxshadow);
-          box-shadow: var(--light-boxshadow);
+  -webkit-box-shadow: var(--boxshadow);
+          box-shadow: var(--boxshadow);
   display: -ms-grid;
   display: grid;
   grid-gap: 3.7rem;
@@ -226,7 +255,7 @@ main {
 }
 
 .repo-info {
-  background: var(--light-body);
+  background: var(--body);
   border-radius: 1.5rem;
   line-height: 1.23;
   margin-bottom: 4.2rem;
@@ -270,24 +299,24 @@ main {
 }
 
 .links li path {
-  fill: var(--light-up);
-  -webkit-transition: fill .5s ease-in-out;
-  transition: fill .5s ease-in-out;
+  fill: var(--link-up);
+  -webkit-transition: fill .25s ease-in-out;
+  transition: fill .25s ease-in-out;
 }
 
 .links a {
-  color: var(--light-up);
+  color: var(--up);
   text-decoration: none;
-  -webkit-transition: color .5s ease-in-out;
-  transition: color .5s ease-in-out;
+  -webkit-transition: color .15s ease-in-out;
+  transition: color .15s ease-in-out;
 }
 
 .links a:hover {
-  color: var(--light-over);
+  color: var(--link-over);
 }
 
 .links a:hover path {
-  fill: var(--light-over);
+  fill: var(--link-over);
 }
 
 .links .icon {

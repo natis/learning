@@ -13,7 +13,7 @@
 	<div class="frame">
 		<header>
 			<h1>Devfinder</h1>
-			<button class="toggle light">Dark <span class="icon" aria-hidden="true"></span></button>
+			<button class="toggle"><span class="text">Dark</span> <span class="icon" aria-hidden="true"></span></button>
 		</header>
 		<form class="search-form">
 			<input type="text" placeholder="Search GitHub username...">
@@ -75,5 +75,31 @@
 			</div><!-- /user-details-->
 		</main>
 	</div><!-- /frame -->
+	<script>
+		// Detect if user is in dark mode or not
+		const themeChoice = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const pageBody = document.body;
+		const themeToggle = document.querySelector('.toggle');
+		const toggleText = document.querySelector('.text');
+		function initTheme() {
+			if(themeChoice) {
+				pageBody.classList.add('dark');
+				toggleText.textContent = 'Light';
+			}
+		}
+		initTheme();
+		function toggleTheme() {
+			if (pageBody.classList.contains('dark')) {
+				pageBody.classList.remove('dark');
+				pageBody.classList.add('light');
+				toggleText.textContent = 'Dark';
+			} else {
+				pageBody.classList.remove('light');
+				pageBody.classList.add('dark');
+				toggleText.textContent = 'Light';
+			}
+		}
+		themeToggle.addEventListener('click', toggleTheme);
+	</script>
 </body>
 </html>
