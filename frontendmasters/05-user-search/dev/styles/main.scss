@@ -92,7 +92,6 @@ header {
 		}
 	}
 }
-
 .search-form {
 	background: url('img/icon-search.svg') var(--main) 3.2rem center no-repeat;
 	border-radius: 1.5rem;
@@ -249,4 +248,7 @@ main {
 		margin-right: 0.4rem;
 		vertical-align: middle;
 	}
+}
+.na {
+	opacity: .5;
 }
